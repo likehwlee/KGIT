@@ -1,0 +1,104 @@
+//게시판 테이블
+create table freeboard(
+        bno number(10,0) not null,
+        title varchar2(200) not null,
+        content varchar2(2000) not null,
+        writer varchar2(50) not null,
+        regdate date DEFAULT sysdate,
+        updatedate date DEFAULT sysdate
+);
+alter table freeboard add CONSTRAINT freeboard_bno_pk PRIMARY KEY (bno);
+create SEQUENCE freeboard_seq;
+
+
+
+
+//댓글 테이블
+select * from freeboard;
+
+create table freereply(
+
+    rno number(10,0),
+    bno number(10,0),
+    reply varchar2(1000),
+    replyId varchar2(50),
+    replyPw varchar2(50),
+    replyDate date default sysdate,
+    updateDate date default sysdate
+
+);
+alter table freereply add CONSTRAINT freereply_pk_rno_pk primary key (rno);
+create sequence freereply_seq;
+
+
+//유저 테이블
+select * 
+from(select rownum as rn,
+            rno,
+            bno,
+            reply,
+            replyId,
+            replyDate,
+            updateDate
+    from(select * 
+        from freereply
+        where bno = 145
+        order by rno desc
+        )
+    )where rn > 20 and rn <=40;
+    
+    create table users(
+        userId varchar2(50),
+        userPw varchar2(50),
+        userName varchar2(50),
+        userPhone1 varchar2(20),
+        userPhone2 varchar2(50),
+        userEmail varchar2(50),
+        userEmail2 varchar2(50),
+        addrZipNum varchar2(50),
+        addrBasic varchar2(300),
+        addrDetail varchar2(300),
+        regDate date DEFAULT sysdate
+);        
+  alter table users add CONSTRAINT users_userId_pk PRIMARY key (userId);  
+    
+
+create table snsboard(
+    bno number(10,0),
+    writer VARCHAR2(50) not null,
+    uploadpath VARCHAR2(100) not null,
+    fileloca VARCHAR2(50) not null,
+    filename VARCHAR2(50) not null,
+    filerealname VARCHAR2(50) not null,
+    content VARCHAR2(2000),
+    regdate date DEFAULT sysdate
+);
+alter TABLE snsboard add CONSTRAINT snsboard_bno_pk PRIMARY key (bno);
+create SEQUENCE snsboard_seq;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
